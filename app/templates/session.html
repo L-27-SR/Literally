@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Session Summary</h2>
+<p>Book: <strong>{{ session.book_title }}</strong></p>
+<p>Character: <strong>{{ session.selected_character or '-' }}</strong></p>
+<p>Status: <strong>{{ 'Complete' if session.is_complete else 'In Progress' }}</strong></p>
+<div class="card">
+	<ol>
+		{% for ch in session.chapters %}
+		<li style="margin-bottom:12px;">
+			<h4>Chapter {{ ch.number }}</h4>
+			{% if ch.image_url %}
+				<img src="{{ ch.image_url }}" style="max-width:100%;height:auto;margin:8px 0;" alt="Chapter image" />
+			{% endif %}
+			<pre>{{ ch.content }}</pre>
+			<p>Choice: {{ ch.selected_choice or '-' }}</p>
+		</li>
+		{% endfor %}
+	</ol>
+</div>
+{% endblock %}

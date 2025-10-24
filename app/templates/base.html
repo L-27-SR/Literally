@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Adventure</title>
+	<link rel="stylesheet" href="/static/styles.css">
+	<script>
+		(function(){
+			const pref = localStorage.getItem('theme');
+			if(pref === 'dark'){ document.documentElement.classList.add('dark'); }
+		})();
+		function toggleTheme(){
+			document.documentElement.classList.toggle('dark');
+			localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark':'light');
+		}
+	</script>
+</head>
+<body>
+	<div class="header">
+		<div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+			<div style="display:flex;align-items:center;gap:10px;">
+				<div class="logo-slot">🔲</div>
+				<div class="brand"><a href="/" class="btn link">Lit-Erally</a></div>
+			</div>
+			<div class="actions">
+				{% if current_user.is_authenticated %}
+					<a class="btn ghost" href="/app">App</a>
+					<a class="btn ghost" href="/profile">Profile</a>
+					<a class="btn" href="/auth/logout">Logout</a>
+				{% else %}
+					<a class="btn ghost" href="/auth/login">Login</a>
+					<a class="btn primary" href="/auth/signup">Sign Up</a>
+				{% endif %}
+				<button class="toggle" onclick="toggleTheme()">🌓</button>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		{% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+				<div class="card soft">
+					{% for category, message in messages %}
+						<div class="alert {{ category }}">{{ message }}</div>
+					{% endfor %}
+				</div>
+			{% endif %}
+		{% endwith %}
+		{% block content %}{% endblock %}
+		<div class="footer">L27</div>
+	</div>
+</body>
+</html>

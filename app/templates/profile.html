@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card" style="max-width:720px;margin:0 auto;">
+  <h2>Your Profile</h2>
+  <form method="post" action="/profile" enctype="multipart/form-data">
+    <div class="row">
+      <div class="col" style="flex:1 1 50%;">
+        <label>Name</label>
+        <input type="text" name="name" class="input" value="{{ user.name or '' }}" />
+      </div>
+      <div class="col" style="flex:1 1 50%;">
+        <label>Email</label>
+        <input type="email" class="input" value="{{ user.email }}" readonly />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col" style="flex:1 1 50%;">
+        <label>Profile Picture URL</label>
+        <input type="url" name="profile_picture_url" class="input" value="{{ user.profile_picture_url or '' }}" />
+      </div>
+      <div class="col" style="flex:1 1 50%;">
+        <label>Or Upload</label>
+        <input type="file" name="profile_picture" accept="image/*" />
+      </div>
+    </div>
+    {% if user.profile_picture_url %}
+    <div class="row">
+      <div class="col" style="flex:1 1 100%; text-align:center;">
+        <img src="{{ user.profile_picture_url }}" alt="Profile" style="max-height:160px;border-radius:8px;" />
+      </div>
+    </div>
+    {% endif %}
+    <div class="row">
+      <div class="col" style="flex:1 1 50%;">
+        <label>Favorite Book</label>
+        <input type="text" name="favorite_book" class="input" value="{{ user.favorite_book or '' }}" />
+      </div>
+      <div class="col" style="flex:1 1 50%;">
+        <label>Genre Preferences</label>
+        <input type="text" name="genre_preferences" class="input" placeholder="e.g., fantasy, mystery" value="{{ user.genre_preferences or '' }}" />
+      </div>
+    </div>
+    <div class="row" style="justify-content:flex-end;">
+      <button class="btn primary">Save Profile</button>
+    </div>
+  </form>
+</div>
+
+<div class="card" style="max-width:720px;margin:16px auto;">
+  <h3>Saved Adventures</h3>
+  <table class="table">
+    <thead>
+      <tr><th>Book</th><th>Character</th><th>Status</th><th style="text-align:right;">Actions</th></tr></thead>
+    <tbody>
+      {% for s in user.stories %}
+      <tr>
+        <td>{{ s.book_title }}</td>
+        <td>{{ s.selected_character or '-' }}</td>
+        <td>{{ 'Complete' if s.is_complete else 'In Progress' }}</td>
+        <td style="text-align:right;">
+          {% if not s.selected_character %}
+            <a class="btn" href="/session/{{ s.id }}/characters">Choose Character</a>
+          {% elif not s.is_complete %}
+            <a class="btn" href="/session/{{ s.id }}/chapter/1">Resume</a>
+          {% else %}
+            <a class="btn ghost" href="/session/{{ s.id }}">View</a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

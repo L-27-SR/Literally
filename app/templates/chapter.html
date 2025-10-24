@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="display:flex;justify-content:space-between;align-items:center;">
+  <h2>Chapter {{ chapter.number }}</h2>
+  <div>
+    <form method="post" action="/session/{{ session.id }}/chapter/{{ chapter.number }}/back" style="display:inline-block;">
+      <button class="btn" {% if chapter.number <= 1 %}disabled{% endif %}>Back</button>
+    </form>
+    <form method="post" action="/session/{{ session.id }}/delete" style="display:inline-block;margin-left:8px;" onsubmit="return confirm('Delete this story?');">
+      <button class="btn">Delete Story</button>
+    </form>
+  </div>
+</div>
+
+<div class="split" style="margin-top:12px;">
+  <div class="pane">
+    <div class="box">
+      <pre style="border:0;padding:0;background:transparent;margin:0;">{{ chapter.content }}</pre>
+    </div>
+  </div>
+  <div class="pane">
+    <div class="box imgbox" style="text-align:center;">
+      {% if chapter.image_url %}
+        <img src="{{ chapter.image_url }}" alt="Chapter image" />
+      {% else %}
+        <div class="lead">Image will appear here.</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<form method="post" style="margin-top:12px;">
+  <label class="list-item"><input type="radio" name="choice" value="A" required style="margin-right:8px;">A) {{ chapter.choice_a }}</label>
+  <label class="list-item"><input type="radio" name="choice" value="B" style="margin-right:8px;">B) {{ chapter.choice_b }}</label>
+  <label class="list-item"><input type="radio" name="choice" value="C" style="margin-right:8px;">C) {{ chapter.choice_c }}</label>
+  <button class="btn primary" style="margin-top:12px;">Choose</button>
+</form>
+{% endblock %}

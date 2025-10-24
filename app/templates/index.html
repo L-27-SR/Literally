@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Start a New Adventure</h2>
+<form method="post" action="/start" class="row" style="gap:8px;margin-bottom:16px;">
+	<div class="col" style="flex:1 1 320px;">
+		<input type="text" name="book_title" class="input" placeholder="Enter a book title" required />
+	</div>
+	<div>
+		<button class="btn primary">Start</button>
+	</div>
+</form>
+
+<h3>Your Sessions</h3>
+<table class="table">
+	<thead>
+		<tr><th>Book</th><th>Character</th><th>Status</th><th style="text-align:right;">Actions</th></tr>
+	</thead>
+	<tbody>
+		{% for s in sessions %}
+		<tr>
+			<td>{{ s.book_title }}</td>
+			<td>{{ s.selected_character or '-' }}</td>
+			<td>{{ 'Complete' if s.is_complete else 'In Progress' }}</td>
+			<td style="text-align:right;">
+				{% if not s.selected_character %}
+					<a class="btn" href="/session/{{ s.id }}/characters">Choose Character</a>
+				{% elif not s.is_complete %}
+					<a class="btn" href="/session/{{ s.id }}/chapter/1">Resume</a>
+				{% else %}
+					<a class="btn ghost" href="/session/{{ s.id }}">View</a>
+				{% endif %}
+				<form method="post" action="/session/{{ s.id }}/delete" style="display:inline-block;margin-left:8px;" onsubmit="return confirm('Delete this story?');">
+					<button class="btn">Delete</button>
+				</form>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}

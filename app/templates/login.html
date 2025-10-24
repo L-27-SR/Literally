@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card" style="max-width:520px;margin:0 auto; text-align:center;">
+    <h2>Login</h2>
+    <p class="lead">Sign in with email or OAuth</p>
+    <div class="row" style="justify-content:center; gap:8px; margin-bottom:12px;">
+        <a class="btn" href="/auth/login/google">Continue with Google</a>
+        <a class="btn" href="/auth/login/github">Continue with GitHub</a>
+        <a class="btn" href="/auth/login/discord">Continue with Discord</a>
+    </div>
+    <hr style="margin:16px 0;"/>
+    <form method="post" action="/auth/login" style="text-align:left;">
+        <div class="row">
+            <div class="col" style="flex:1 1 100%;">
+                <label>Email</label>
+                <input type="email" name="email" class="input" required />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" style="flex:1 1 100%;">
+                <label>Password</label>
+                <input type="password" name="password" class="input" required />
+            </div>
+        </div>
+        <div class="row" style="justify-content:space-between;align-items:center;">
+            <button class="btn primary" type="submit">Login</button>
+            <a class="btn ghost" href="/auth/signup">Create an account</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

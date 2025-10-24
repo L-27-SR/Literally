@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Choose Your Character</h2>
+<p>Book: <strong>{{ session.book_title }}</strong></p>
+<form method="post">
+	<div class="list-group" style="margin-bottom:12px;">
+		{% for c in characters %}
+		<label class="list-item">
+			<input type="radio" name="character" value="{{ c }}" required style="margin-right:8px;">
+			{{ c }}
+		</label>
+		{% endfor %}
+	</div>
+	<button class="btn primary">Continue</button>
+</form>
+{% endblock %}

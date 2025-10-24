@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card" style="max-width:520px;margin:0 auto;">
+	<h2>Sign Up</h2>
+	<form method="post" action="/auth/signup">
+		<div class="row">
+			<div class="col" style="flex:1 1 100%;">
+				<label>Name</label>
+				<input type="text" name="name" class="input" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col" style="flex:1 1 100%;">
+				<label>Email</label>
+				<input type="email" name="email" class="input" required />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col" style="flex:1 1 100%;">
+				<label>Password</label>
+				<input type="password" name="password" class="input" required />
+			</div>
+		</div>
+		<div class="row" style="justify-content:space-between;align-items:center;">
+			<button class="btn primary">Create Account</button>
+			<a class="btn ghost" href="/auth/login">Back to login</a>
+		</div>
+	</form>
+</div>
+{% endblock %}
