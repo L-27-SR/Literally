@@ -16,8 +16,8 @@ class User(db.Model, UserMixin):
     genre_preferences = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    stories = db.relationship("StorySession", backref="user", lazy=True)
-    adventures = db.relationship("Adventure", backref="user", lazy=True)
+    stories = db.relationship("StorySession", backref="user", lazy=True, overlaps="adventures,user")
+    adventures = db.relationship("Adventure", backref="user", lazy=True, overlaps="stories,user")
 
     def get_id(self):
         return str(self.id)
